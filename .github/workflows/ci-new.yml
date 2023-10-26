@@ -1,0 +1,23 @@
+name: Build and Publish Docker Image
+
+on:
+  push:
+    branches:
+      - main  # Defina a branch que acionará o workflow
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Login to Docker Hub
+        run: docker login -u ${{username}} -p ${{password}}
+
+      - name: Build and tag Docker image
+        run: docker build -t dockerimage .
+
+      - name: Push Docker image
+        run: docker push dockerimage
